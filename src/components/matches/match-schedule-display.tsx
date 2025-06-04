@@ -2,7 +2,7 @@ import type { Match, Team } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { CalendarClock, MapPin, Versus, Sparkles, TrendingUp } from 'lucide-react';
+import { CalendarClock, MapPin, Swords, Sparkles, TrendingUp } from 'lucide-react';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import MatchStorytellerClient from '@/components/ai/match-storyteller-client';
@@ -71,7 +71,7 @@ export default function MatchScheduleDisplay({ matches, competitionName }: Match
                         {match.scoreA ?? 0} - {match.scoreB ?? 0}
                       </span>
                     ) : (
-                      <Versus className="h-6 w-6 text-muted-foreground" />
+                      <Swords className="h-6 w-6 text-muted-foreground" />
                     )}
                   </div>
                   <TeamDisplay team={match.teamB} />
