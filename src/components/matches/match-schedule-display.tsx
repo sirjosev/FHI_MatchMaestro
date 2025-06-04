@@ -1,3 +1,4 @@
+
 import type { Match, Team } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -36,9 +37,9 @@ export default function MatchScheduleDisplay({ matches, competitionName }: Match
   const getStatusVariant = (status: Match['status']) => {
     switch (status) {
       case 'Scheduled': return 'outline';
-      case 'Live': return 'destructive';
+      case 'Live': return 'destructive'; // More prominent for live matches
       case 'Completed': return 'secondary';
-      case 'Postponed': return 'default'; // Or another specific color
+      case 'Postponed': return 'default'; 
       default: return 'default';
     }
   };
@@ -64,17 +65,21 @@ export default function MatchScheduleDisplay({ matches, competitionName }: Match
               </CardHeader>
               <CardContent className="p-4 space-y-3">
                 <div className="flex flex-col sm:flex-row items-center justify-around gap-4 text-center sm:text-left">
-                  <TeamDisplay team={match.teamA} />
+                  <div className="flex-1 text-center sm:text-right">
+                     <TeamDisplay team={match.teamA} />
+                  </div>
                   <div className="flex flex-col items-center">
                     {match.status === 'Completed' || match.status === 'Live' ? (
                       <span className="text-2xl font-bold text-primary">
-                        {match.scoreA ?? 0} - {match.scoreB ?? 0}
+                        {match.scoreA ?? (match.status === 'Live' ? 0 : '?')} - {match.scoreB ?? (match.status === 'Live' ? 0 : '?')}
                       </span>
                     ) : (
                       <Swords className="h-6 w-6 text-muted-foreground" />
                     )}
                   </div>
-                  <TeamDisplay team={match.teamB} />
+                  <div className="flex-1 text-center sm:text-left">
+                    <TeamDisplay team={match.teamB} />
+                  </div>
                 </div>
 
                 {match.status === 'Completed' && typeof match.scoreA === 'number' && typeof match.scoreB === 'number' && (
@@ -99,7 +104,7 @@ export default function MatchScheduleDisplay({ matches, competitionName }: Match
                     matchDetails={`${match.teamA.name} vs ${match.teamB.name} in ${competitionName}`}
                     matchStatus={match.status}
                     score={ (match.scoreA !== undefined && match.scoreB !== undefined) ? `${match.scoreA}-${match.scoreB}` : undefined}
-                    keyEvents={match.keyEventsSummary}
+                    keyEvents={match.keyEventsSummary} // Ensure keyEventsSummary is passed
                 />
               </CardContent>
             </Card>
@@ -109,3 +114,4 @@ export default function MatchScheduleDisplay({ matches, competitionName }: Match
     </Card>
   );
 }
+

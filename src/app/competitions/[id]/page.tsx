@@ -1,3 +1,4 @@
+
 import { getCompetitionById } from '@/data/mock';
 import type { Competition } from '@/types';
 import CompetitionDetailsDisplay from '@/components/competitions/competition-details-display';
@@ -63,3 +64,4 @@ export async function generateStaticParams() {
     id: comp.id,
   }));
 }
+
