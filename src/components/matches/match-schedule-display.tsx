@@ -2,7 +2,7 @@ import type { Match, Team } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { CalendarClock, MapPin, Versus, Sparkles } from 'lucide-react';
+import { CalendarClock, MapPin, Versus, Sparkles, TrendingUp } from 'lucide-react';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import MatchStorytellerClient from '@/components/ai/match-storyteller-client';
@@ -76,10 +76,24 @@ export default function MatchScheduleDisplay({ matches, competitionName }: Match
                   </div>
                   <TeamDisplay team={match.teamB} />
                 </div>
-                <div className="text-xs text-muted-foreground flex items-center justify-center gap-1">
+
+                {match.status === 'Completed' && typeof match.scoreA === 'number' && typeof match.scoreB === 'number' && (
+                  <div className="mt-2 text-xs text-center text-muted-foreground border-t pt-2">
+                    <div className="flex items-center justify-center gap-1 mb-1">
+                       <TrendingUp className="h-3 w-3 text-primary" /> Points from this match:
+                    </div>
+                    <div className="flex justify-around">
+                      <span>{match.teamA.name}: {match.scoreA > match.scoreB ? '+3' : (match.scoreA === match.scoreB ? '+1' : '+0')}</span>
+                      <span>{match.teamB.name}: {match.scoreB > match.scoreA ? '+3' : (match.scoreA === match.scoreB ? '+1' : '+0')}</span>
+                    </div>
+                  </div>
+                )}
+
+                <div className="text-xs text-muted-foreground flex items-center justify-center gap-1 pt-2">
                   <MapPin className="h-3 w-3"/> 
                   {match.venue}
                 </div>
+                
                 <MatchStorytellerClient
                     matchId={match.id}
                     matchDetails={`${match.teamA.name} vs ${match.teamB.name} in ${competitionName}`}

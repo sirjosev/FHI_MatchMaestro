@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { LayoutDashboard, Trophy, Users, CalendarDays, BarChart3, PieChart, ShieldQuestion } from 'lucide-react';
+import { LayoutDashboard, Trophy, Settings, ShieldQuestion } from 'lucide-react'; // Removed unused icons, Added Settings
 import Image from 'next/image';
 
 interface NavItem {
@@ -29,6 +29,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard, matchSegments: 1 },
   { href: '/competitions', label: 'Competitions', icon: Trophy, matchSegments: 1 },
+  { href: '/admin', label: 'Admin', icon: Settings, matchSegments: 1 }, // Added Admin link
   // Add more items as pages are created
   // { href: '/teams', label: 'Teams', icon: Users },
   // { href: '/matches', label: 'Matches', icon: CalendarDays },
@@ -45,6 +46,10 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     const pathSegments = pathname.split('/').filter(Boolean);
     const hrefSegments = href.split('/').filter(Boolean);
     // Match specified number of segments
+    // For admin, also match /admin/*
+    if (href === '/admin') {
+      return pathSegments[0] === 'admin';
+    }
     return hrefSegments.every((segment, i) => i < matchSegments && segment === pathSegments[i]);
   };
 
@@ -89,7 +94,8 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           {/* Page specific title or breadcrumbs can go here */}
           <div className="flex-1">
             <h2 className="text-lg font-semibold">
-              {navItems.find(item => isActive(item.href, item.matchSegments))?.label || 'Match Maestro'}
+              {navItems.find(item => isActive(item.href, item.matchSegments))?.label || 
+               (pathname.startsWith('/admin') ? 'Admin' : 'Match Maestro')}
             </h2>
           </div>
         </header>
