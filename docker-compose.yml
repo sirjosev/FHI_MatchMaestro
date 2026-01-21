@@ -1,0 +1,18 @@
+version: '3'
+services:
+  dev:
+    image: node:20-alpine
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+      # Avoid overwriting node_modules with host's empty node_modules if it exists, 
+      # but we actually want to sync usually. 
+      # For dev, we often put node_modules in a volume to speed up and avoid OS mismatch, 
+      # but if we want intellisense on host, we need it on host.
+      # Let's try to keep it simple: install inside, sync to host.
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+    command: npm run dev
+    # command: sh -c "npm install && npm run dev" # Use this if node_modules are missing
