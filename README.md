@@ -1,3 +1,14 @@
+---
+title: MatchScoring V0.1
+emoji: 🚀
+colorFrom: green
+colorTo: purple
+sdk: docker
+pinned: false
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+
 # AI Match Scoring & Scheduling App
 
 A premium, AI-powered web application for managing sports matches and generating tournament schedules.
